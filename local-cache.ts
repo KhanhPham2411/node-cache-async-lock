@@ -1,7 +1,6 @@
 
 const NodeCache = require( "node-cache" );
 
-type Key = string | number
 
 export class LocalCache {
   private static _instance: LocalCache;
@@ -20,14 +19,6 @@ export class LocalCache {
       LocalCache._instance = new LocalCache(0);
     }
     return LocalCache._instance
-  }
-  
-  public get(key: Key) {
-    return this.cache.get(key)
-  }
-
-  public set(key: Key, value): void {
-    this.cache.set(key, value)
   }
 
   public async readThrough(key, func, ttl=0) {
