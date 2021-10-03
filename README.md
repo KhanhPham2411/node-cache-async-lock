@@ -1,8 +1,6 @@
 # node-cache-async-lock
 
-# Examples:
-
-## Initialize (INIT):
+## Examples:
 
 ```js
 import { LocalCache } from '../local-cache';
