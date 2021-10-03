@@ -35,8 +35,6 @@ describe ("SignalCache.get", () => {
   it("Should lock concurrent request", async () => {
     jest.spyOn(Signal, "get");
   
-    jest.spyOn(Signal, "get");
-  
     const task1 = SignalCache.get();
     const task2 = SignalCache.get();
     const task3 = SignalCache.get();
