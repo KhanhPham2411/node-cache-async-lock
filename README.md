@@ -28,15 +28,15 @@ export class Signal {
 ```
 
 ```js
-import { Signal, SignalCache} from './signal-cache';
+import { SignalDatabase, SignalCache} from './signal-cache';
 import { Util } from './util';
 import { LocalCache } from '../local-cache';
 
 describe ("SignalCache.get", () => {
-  let signalJest = jest.spyOn(Signal, "get");
+  let signalJest = jest.spyOn(SignalDatabase, "get");
 
   beforeEach(() => {
-    signalJest = jest.spyOn(Signal, "get");
+    signalJest = jest.spyOn(SignalDatabase, "get");
   })
   afterEach( () => {
     LocalCache.getInstance().clear();
@@ -47,7 +47,7 @@ describe ("SignalCache.get", () => {
     await SignalCache.get();
     await SignalCache.get();
   
-    expect(Signal.get).toBeCalledTimes(1);
+    expect(SignalDatabase.get).toBeCalledTimes(1);
   });
   
   it("Time to leave should expire the cache", async () => {
@@ -55,7 +55,7 @@ describe ("SignalCache.get", () => {
     await Util.sleep(6); // > readThrough('SignalCache.get', async () => {}, 5)
     await SignalCache.get();
   
-    expect(Signal.get).toBeCalledTimes(2);
+    expect(SignalDatabase.get).toBeCalledTimes(2);
   }, 30000);
   
   it("Should lock concurrent request", async () => {
@@ -64,12 +64,9 @@ describe ("SignalCache.get", () => {
     const task3 = SignalCache.get();
     const allTasks = await Promise.all([task1, task2, task3]);
   
-    expect(Signal.get).toBeCalledTimes(1);
+    expect(SignalDatabase.get).toBeCalledTimes(1);
   }, 30000);
   
 })
-
-
-
 
 ```
