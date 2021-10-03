@@ -1,5 +1,6 @@
 const NodeCache = require( "node-cache" );
 const AsyncLock = require('async-lock');
+import {} from 'node-cache'
 
 const lock = new AsyncLock();
 
@@ -20,6 +21,9 @@ export class LocalCache {
       LocalCache._instance = new LocalCache(0);
     }
     return LocalCache._instance
+  }
+  public clear() {
+    LocalCache._instance = null;
   }
 
   public async readThrough(key, func, ttl=0) {
