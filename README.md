@@ -44,8 +44,6 @@ describe ("SignalCache.get", () => {
   });
 
   it("Signal.get should be called 1", async () => {
-    jest.spyOn(Signal, "get");
-  
     await SignalCache.get();
     await SignalCache.get();
   
@@ -53,8 +51,6 @@ describe ("SignalCache.get", () => {
   });
   
   it("Time to leave should expire the cache", async () => {
-    jest.spyOn(Signal, "get");
-  
     await SignalCache.get();
     await Util.sleep(6); // > readThrough('SignalCache.get', async () => {}, 5)
     await SignalCache.get();
@@ -63,8 +59,6 @@ describe ("SignalCache.get", () => {
   }, 30000);
   
   it("Should lock concurrent request", async () => {
-    jest.spyOn(Signal, "get");
-  
     const task1 = SignalCache.get();
     const task2 = SignalCache.get();
     const task3 = SignalCache.get();
