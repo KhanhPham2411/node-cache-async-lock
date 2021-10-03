@@ -1,5 +1,13 @@
 # node-cache-async-lock
 
+# Install
+
+```bash
+	git submodule add -b master https://github.com/KhanhPham2411/node-cache-async-lock.git
+```
+
+
+
 ## Examples:
 
 ```js
