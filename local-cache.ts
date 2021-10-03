@@ -1,6 +1,7 @@
-
 const NodeCache = require( "node-cache" );
+const AsyncLock = require('async-lock');
 
+const lock = new AsyncLock();
 
 export class LocalCache {
   private static _instance: LocalCache;
@@ -22,11 +23,13 @@ export class LocalCache {
   }
 
   public async readThrough(key, func, ttl=0) {
-    let value = this.cache.get(key);
-    if(value == null){
-      value = await func();
-      this.cache.set(key, value, ttl);
-    }
-    return value;
+    return await lock.acquire(key , async () => {
+      let value = this.cache.get(key);
+      if(value == null){
+        value = await func();
+        this.cache.set(key, value, ttl);
+      }
+      return value;
+    })
   }
 }
