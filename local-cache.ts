@@ -26,6 +26,7 @@ export class LocalCache {
     LocalCache._instance = null;
   }
 
+  // ttl in seconds
   public async readThrough(key, func, ttl=0) {
     return await lock.acquire(key , async () => {
       let value = this.cache.get(key);
